@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            p {
+                font-size: 1.2vw;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            textarea {
+                height: 20vh;
+                width: 20vw;
+                align-self: center;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                resize: none;
+            }
+            button {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1vh;
+            }
+            @media (min-width: 1920px) {
+                p {
+                    font-size: 23px;
+                }
+            }
+            @media (max-width: 600px) {
+                p {
+                    font-size: 8px;
+                }
+            }
+        </style>
+        <title> Random Picker </title>
+        <link rel="icon" type="image/x-icon" href="./favicon.ico"> 
+    </head>
+    <body>
+        <form>
+            <p>Enter set with elements separated line by line</p>
+            <p style = "color: red">Note: if an element is repeated, its copies will be ignored when random picking</p>
+            <textarea name = "elementset"></textarea>
+            <p>Number of elements to pick</p>
+            <input type = "text" style = "display: block; margin-left: auto; margin-right: auto;">
+            <button type = "button">Submit</button>
+        </form>
+    </body>
+</html>
