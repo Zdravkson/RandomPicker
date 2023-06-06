@@ -32,6 +32,9 @@
     <body>
         <script>
             function submitSet() {
+                // picknum - number of elements to pick
+                // setTextSplitted - array of elements separated by newlines
+                // arrElements - array of elements
                 console.log("Submit button has been clicked.");
                 let picknumstr = document.getElementById("numinput").value;
                 if(isNaN(picknumstr)) {
@@ -39,11 +42,17 @@
                     return ;
                 }
                 let picknum = parseInt(picknumstr);
+                let setstr = document.getElementById("settextarea").value;
+                let setTextSplitted = setstr.split("/\r?\n/");
+                let arrElements = [];
+                for(let iterLine = 0; iterLine < setTextSplitted.length; iterLine++) {
+                    setElements.push(setTextSplitted[iterLine]);
+                }
             }
         </script>
         <form>
             <p>Type in set with elements separated line by line:</p>
-            <textarea></textarea>
+            <textarea id = "settextarea"></textarea>
             <p style = "color: red">Note: if an element is repeated, its copies will be ignored when random picking</p>
             <p>Number of elements to pick</p>
             <input type = "text" id = "numinput">
