@@ -25,13 +25,24 @@
         <link rel="icon" type="image/x-icon" href="./favicon.ico"> 
     </head>
     <body>
+        <script>
+            function submitSet() {
+                console.log("Submit button has been clicked.");
+                let picknumstr = document.getElementById("numinput").value;
+                if(isNaN(picknumstr)) {
+                    console.log("Entered number of picks is not valid.");
+                    return ;
+                }
+                let picknum = parseInt(picknumstr);
+            }
+        </script>
         <form>
-            <p>Choose the file with elements separated line by line</p>
+            <p>Choose the file with elements separated line by line:</p>
             <input type = "file">
             <p style = "color: red">Note: if an element is repeated, its copies will be ignored when random picking</p>
             <p>Number of elements to pick</p>
-            <input type = "text">
-            <button type = "button">Submit</button>
+            <input type = "text" id = "numinput">
+            <button type = "button" onclick="submitSet()">Submit</button>
         </form>
     </body>
 </html>
