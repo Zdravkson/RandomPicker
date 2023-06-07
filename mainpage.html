@@ -41,6 +41,40 @@
     </head>
     <body>
         <script>
+            var inputState = false;
+            let fileInputResult;
+
+            function readFile(input) {
+                let file = input.files[0]; 
+                let fileReader = new FileReader(); 
+                fileReader.readAsText(file); 
+                fileReader.onload = function() {
+                    fileInputResult = fileReader.result;
+                }; 
+            }
+
+            function switchInput() {
+                // inputState = true --> file input
+                // inputState = false --> textarea input
+                let setTextArea = document.getElementById("settextarea");
+                let fileInput = document.getElementById("fileinput");
+                let textAreaParagraph = document.getElementById("textareaparagraph");
+                let fileInputParagraph = document.getElementById("fileinputparagraph");
+                if(inputState) {
+                    inputState = false;
+                    setTextArea.style.display = "inline";
+                    textAreaParagraph.style.display = "block";
+                    fileInput.style.display = "none";
+                    fileInputParagraph.style.display = "none";
+                } else {
+                    inputState = true;
+                    setTextArea.style.display = "none";
+                    textAreaParagraph.style.display = "none";
+                    fileInput.style.display = "inline";
+                    fileInputParagraph.style.display = "block";
+                }
+            }
+
             function randomNumberGenerator(minnum, maxnum) {
                 return Math.floor(Math.random() * (maxnum - minnum) ) + minnum;
             }
@@ -62,7 +96,12 @@
                     return ;
                 }
                 let picknum = parseInt(picknumstr);
-                let setstr = document.getElementById("settextarea").value;
+                let setstr;
+                if(!inputState) {
+                    setstr = document.getElementById("settextarea").value;
+                } else {
+                    setstr = fileInputResult;
+                }
                 if(setstr === "") {
                     submitResponse("Error: No elements entered.");
                     return ;
@@ -72,7 +111,7 @@
                 let ans = [];
                 let elementCount = new Set();
                 for(let iterLine = 0; iterLine < setTextSplitted.length; iterLine++) {
-                    if(elementCount.has(setTextSplitted[iterLine])) {
+                    if(elementCount.has(setTextSplitted[iterLine]) || setTextSplitted[iterLine] == "") {
                         continue;
                     }
                     arrElements.push(setTextSplitted[iterLine]);
@@ -107,12 +146,17 @@
             }
         </script>
         <form>
-            <p>Type in set with elements separated line by line:</p>
+            <p style = "display: inline;">Switch input type: </p>
+            <button type = "button" onclick = "switchInput()">Switch</button>
+            <br>
+            <p id = "fileinputparagraph" style = "display: none;">Choose a file with elements separated line by line:</p>
+            <input type = "file" id = "fileinput" style = "display: none;" onchange = "readFile(this)">
+            <p id = "textareaparagraph">Type in set with elements separated line by line:</p>
             <textarea id = "settextarea"></textarea>
             <p style = "color: red">Note: if an element is repeated, its copies will be ignored when random picking</p>
             <p>Number of elements to pick</p>
             <input type = "text" id = "numinput">
-            <button type = "button" onclick="submitSet()">Submit</button>
+            <button type = "button" onclick = "submitSet()">Submit</button>
             <br>
             <h3 id = "responseHeader" style = "display: none;">Response:</h3>
             <p id = "responseParagraph"><p>
