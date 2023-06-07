@@ -59,8 +59,13 @@
                 let setTextSplitted = setstr.split("\n");
                 let arrElements = [];
                 let ans = [];
+                let elementCount = new Set();
                 for(let iterLine = 0; iterLine < setTextSplitted.length; iterLine++) {
+                    if(elementCount.has(setTextSplitted[iterLine])) {
+                        continue;
+                    }
                     arrElements.push(setTextSplitted[iterLine]);
+                    elementCount.add(setTextSplitted[iterLine]);
                 }
                 if(picknum > arrElements.length) {
                     console.log("Error: The number of picks is higher than the number of distinct elements.");
