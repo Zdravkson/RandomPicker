@@ -7,6 +7,10 @@
                 font-size: 1.2vw;
                 font-family: sans-serif;
             }
+            h3 {
+                font-size: 1.5vw;
+                font-family: sans-serif;
+            }
             textarea {
                 height: 20vh;
                 width: 20vw;
@@ -19,10 +23,16 @@
                 p {
                     font-size: 23px;
                 }
+                h3 {
+                    font-size: 29px;
+                }
             }
             @media (max-width: 600px) {
                 p {
                     font-size: 8px;
+                }
+                h3 {
+                    font-size: 9px;
                 }
             }
         </style>
@@ -31,22 +41,56 @@
     </head>
     <body>
         <script>
+            function randomNumberGenerator(minnum, maxnum) {
+                return Math.floor(Math.random() * (maxnum - minnum) ) + minnum;
+            }
+
             function submitSet() {
                 // picknum - number of elements to pick
                 // arrElements - array of elements
                 console.log("Submit button has been clicked.");
                 let picknumstr = document.getElementById("numinput").value;
                 if(isNaN(picknumstr)) {
-                    console.log("Entered number of picks is not valid.");
+                    console.log("Error: Entered number of picks is not valid.");
                     return ;
                 }
                 let picknum = parseInt(picknumstr);
                 let setstr = document.getElementById("settextarea").value;
-                let setTextSplitted = setstr.split("/\r?\n/");
+                let setTextSplitted = setstr.split("\n");
                 let arrElements = [];
+                let ans = [];
                 for(let iterLine = 0; iterLine < setTextSplitted.length; iterLine++) {
-                    setElements.push(setTextSplitted[iterLine]);
+                    arrElements.push(setTextSplitted[iterLine]);
                 }
+                if(picknum > arrElements.length) {
+                    console.log("Error: The number of picks is higher than the number of distinct elements.");
+                    return ;
+                }
+                for(let i = 0; i < picknum; i++) {
+                    let randomIndex = randomNumberGenerator(0, arrElements.length);
+                    ans.push(arrElements[randomIndex]);
+                    let newarr = [];
+                    for(let j = 0; j < arrElements.length; j++) {
+                        if(j == randomIndex) {
+                            continue;
+                        }
+                        newarr.push(arrElements[j]);
+                    }
+                    arrElements = [];
+                    for(let j = 0; j < newarr.length; j++) {
+                        arrElements.push(newarr[j]);
+                    }
+                }
+                ans.sort();
+                let ansstr = "";
+                for(let i = 0; i < ans.length; i++) {
+                    ansstr += ans[i];
+                    ansstr += "\n";
+                }
+                let rp = document.getElementById("responseParagraph");
+                let rh = document.getElementById("responseHeader");
+                rh.style.display = "inline";
+                rp.innerHTML= ansstr;
             }
         </script>
         <form>
@@ -56,6 +100,9 @@
             <p>Number of elements to pick</p>
             <input type = "text" id = "numinput">
             <button type = "button" onclick="submitSet()">Submit</button>
+            <br>
+            <h3 id = "responseHeader" style = "display: none;">Response:</h3>
+            <p id = "responseParagraph"><p>
         </form>
     </body>
 </html>
