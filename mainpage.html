@@ -91,7 +91,7 @@
                 // arrElements - array of elements
                 console.log("Submit button has been clicked.");
                 let picknumstr = document.getElementById("numinput").value;
-                if(isNaN(picknumstr)) {
+                if(isNaN(picknumstr) || picknumstr == "") {
                     submitResponse("Error: Entered number of picks is not valid.");
                     return ;
                 }
